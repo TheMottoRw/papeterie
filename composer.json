@@ -1,0 +1,9 @@
+{
+    "name": "asua/papeterie",
+    "description": "papeterie management",
+    "type": "project",
+    "require": {
+        "dompdf/dompdf": "^3.1",
+        "mpdf/mpdf": "^8.2"
+    }
+}
