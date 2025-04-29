@@ -1,6 +1,13 @@
 <?php
 include 'db.php';
 require_once "php/invoices.php";
+$start_date = '';
+$end_date = '';
+$salesData = array();
+$total_income = 0;
+$total_profit = 0;
+$total_paid = 0;
+$total_debt = 0;
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'] . " 00:00:01";
@@ -8,14 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Step 1: Retrieve Sales Data
     $invoice = new Invoices();
-    $salesData = json_decode($invoice->getInvoices(['request'=>'report_debt']), true);
+    $salesData = json_decode($invoice->getInvoices(['request'=>'report_debt',"start_date"=>$start_date,"end_date"=>$end_date]), true);
 
 
 // Calculate total income and total profit
-    $total_income = 0;
-    $total_profit = 0;
-    $total_paid = 0;
-    $total_debt = 0;
+
     foreach ($salesData as $sale) {
         $total_income += $sale['total_amount'];
         $total_profit += $sale['total_profit'];

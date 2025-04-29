@@ -1,5 +1,9 @@
 <?php
 include 'db.php';
+
+$start_date='';
+$end_date='';
+$items = [];
 require_once "php/invoices.php";
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

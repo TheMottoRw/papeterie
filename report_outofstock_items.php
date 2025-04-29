@@ -1,5 +1,7 @@
 <?php
 include 'db.php';
+$quantity = 0;
+$items = [];
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $quantity = $_POST['quantity'];

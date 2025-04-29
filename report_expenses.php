@@ -1,5 +1,9 @@
 <?php
 include 'db.php';
+$start_date='';
+$end_date='';
+$total_expenses = 0;
+$expensesData = [];
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'] . " 00:00:01";

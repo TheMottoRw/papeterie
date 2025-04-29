@@ -123,7 +123,7 @@ class Invoices
         if(isset($datas['request']) && $datas['request']=='report'){
             $query = "SELECT i.*,c.name as client_name,c.phone as client_phone FROM invoices i INNER JOIN clients c ON c.id=i.invoice_clientid WHERE i.delete_status=? AND i.total_amount!=0 ORDER BY i.invoice_id DESC";
         }else if(isset($datas['request']) && $datas['request']=='report_debt'){
-            $query = "SELECT i.*,c.name as client_name,c.phone as client_phone FROM invoices i INNER JOIN clients c ON c.id=i.invoice_clientid WHERE i.delete_status=? AND i.total_amount!=0 AND i.total_amount!=i.paid ORDER BY i.invoice_id DESC";
+            $query = "SELECT i.*,c.name as client_name,c.phone as client_phone FROM invoices i INNER JOIN clients c ON c.id=i.invoice_clientid WHERE i.delete_status=? AND i.total_amount!=0 AND i.total_amount!=i.paid AND i.regdate BETWEEN '".$datas['start_date']."' AND  '".$datas['end_date']."' ORDER BY i.invoice_id DESC";
         }
         $data = $this->db->select($query, [0]);
         return json_encode($data);

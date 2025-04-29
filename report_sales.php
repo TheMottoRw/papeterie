@@ -1,6 +1,13 @@
 <?php
 include 'db.php';
 require_once "php/invoices.php";
+$start_date = '';
+$end_date = '';
+$salesData = [];
+$total_income = 0;
+$total_profit = 0;
+$total_paid = 0;
+$total_debt = 0;
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'] . " 00:00:01";

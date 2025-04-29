@@ -28,7 +28,7 @@ function getLastRoute(){
 function routeGuard() {
     requiresLogin();
     var adminUnique = ["users.php","edit_user.php", "report_debt.php","report_expenses.php","report_items.php","report_outofstock_items.php","report_services.php"];
-    var sellerUnique = ["items.php","edit_item.php","services.php","edit_service.php","expenses.php","edit_expense.php","invoices.php"];
+    var sellerUnique = ["items.php","edit_item.php","services.php","edit_service.php","expenses.php","edit_expenses.php","invoices.php"];
     var url = window.location.pathname.split("/")
     var lastSegment = url[url.length - 1];
     if (!isNaN(lastSegment)) url.pop();
