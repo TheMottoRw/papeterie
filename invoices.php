@@ -13,6 +13,7 @@
           rel="stylesheet"/>
 </head>
 <body>
+
 <?php
 include('sidebar.php');
 ?>
@@ -32,6 +33,8 @@ include('sidebar.php');
     <div class="mb-3">
         <input type="text" id="searchBox" class="form-control" placeholder="Search...">
     </div>
+    <div id="responseSuccess"></div>
+    <div id="responseFail"></div>
     <table class="table table-striped" id="table">
         <thead>
         <tr>
@@ -88,7 +91,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnCreateInvoice">Save Invoice</button>
+                <button type="button" class="btn btn-primary" id="btnCreateInvoice"  data-bs-dismiss="modal">Save Invoice</button>
             </div>
         </div>
     </div>
@@ -144,7 +147,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnAddInvoiceDetail">Save</button>
+                <button type="button" class="btn btn-primary" id="btnAddInvoiceDetail" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -191,7 +194,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail">Save</button>
+                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail"  data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -227,7 +230,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnPayInvoice">Pay</button>
+                <button type="button" class="btn btn-primary" id="btnPayInvoice" data-bs-dismiss="modal">Pay</button>
             </div>
         </div>
     </div>
@@ -256,7 +259,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail">Save</button>
+                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -299,7 +302,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail">Save</button>
+                <button type="button" class="btn btn-primary" id="btnUpdInvoiceDetail" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -359,7 +362,7 @@ include('sidebar.php');
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="btnDeleteInvoiceDetail">Save</button>
+                <button type="button" class="btn btn-primary" id="btnDeleteInvoiceDetail" data-bs-dismiss="modal">Save</button>
             </div>
         </div>
     </div>
@@ -381,7 +384,7 @@ include('sidebar.php');
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnDeleteInvoice" class="btn btn-danger"><i class="fa fa-check-square-o"></i>
+                <button type="button" id="btnDeleteInvoice" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-check-square-o"></i>
                     Delete
                 </button>
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-remove"></i>
@@ -409,7 +412,7 @@ include('sidebar.php');
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnDeletePayment" class="btn btn-danger"><i class="fa fa-check-square-o"></i>
+                <button type="button" id="btnDeletePayment" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa fa-check-square-o"></i>
                     Delete
                 </button>
                 <button type="button" class="btn btn-default" data-bs-dismiss="modal"><i class="fa fa-remove"></i>
@@ -425,19 +428,19 @@ include('sidebar.php');
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>-->
 
 <script>
-    document.getElementById('saveInvoice').addEventListener('click', function () {
-        // Add your save logic here
-        // You can collect form data and send it to the server
-        alert('Invoice saved successfully!');
-        // Close the modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('createInvoiceModal'));
-        modal.hide();
-    });
+    // document.getElementById('saveInvoice').addEventListener('click', function () {
+    //     // Add your save logic here
+    //     // You can collect form data and send it to the server
+    //     alert('Invoice saved successfully!');
+    //     // Close the modal
+    //     const modal = bootstrap.Modal.getInstance(document.getElementById('createInvoiceModal'));
+    //     modal.hide();
+    // });
 </script>
 <script src="assets/jquery/jquery-3.7.1.min.js"></script>
-<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.js"></script>
 
-<script src="js/helpers.js"></script>
+<script src="script.js"></script>
 <script src="assets/select2/select2.min.js"></script>
 <script src="js/helpers.js"></script>
 <script src="js/jqdepend.js"></script>
@@ -564,6 +567,7 @@ include('sidebar.php');
             $("#invidt").html(invoice_id);
             $("#totalprof").html("Total profit: " + total_profit + " RWF");
         }
+        
 
         function createInvoice() {
             ajax('ajax/invoices.php', {
@@ -572,10 +576,14 @@ include('sidebar.php');
                 phone: $('#phone').val(),
                 clientId: $('#clients').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#response").html("<font color='green'>Invoice Created Success</font>");
-                else
-                    $("#response").html("<font color='error'>Can not create invoice</font>");
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Invoice Created Success</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
+                    $("#responseFail").html("<font color='error'>Can not create invoice</font>");
+                }
                 $('#name').val('');
                 $('#phone').val('');
             });
@@ -588,10 +596,14 @@ include('sidebar.php');
                 remain: $('#remainamount').val(),
                 invoiceid: $('#invoiceid').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#response").html("<font color='green'>Invoice paid</font>");
-                else
-                    $("#response").html("<font color='error'>Can not pay invoice</font>");
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Invoice paid</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
+                    $("#responseFail").html("<font color='error'>Can not pay invoice</font>");
+                }
                 $('#paidamount').val('');
                 $('#remainamount').val('');
             });
@@ -605,13 +617,16 @@ include('sidebar.php');
                 quantity: $('#quantity').val(),
                 selling_price: $('#selling_price').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#add-detail-response").html("<font color='green'>Item added on invoice Success</font>");
-                else {
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Item added on invoice Success</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
                     if (data == 'notenought') {
-                        $("#add-detail-response").html("<font color='error'>There is no enought quantity for the selected item</font>");
+                        $("#responseFail").html("<font color='error'>There is no enought quantity for the selected item</font>");
                     } else if (data == 'fail') {
-                        $("#add-detail-response").html("<font color='error'>Can not add item on invoice</font>");
+                        $("#responseFail").html("<font color='error'>Can not add item on invoice</font>");
                     }
                 }
                 $('#name').val('');
@@ -624,10 +639,14 @@ include('sidebar.php');
                 cate: 'deleteinvoice',
                 id: $('#invoiceid').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#delInvoiceResponse").html("<font color='green'>Invoice deleted Success</font>");
-                else
-                    $("#delInvoiceResponse").html("<font color='error'>Can not delete invoice</font>");
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Invoice deleted Success</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
+                    $("#responseFail").html("<font color='error'>Can not delete invoice</font>");
+                }
             });
         }
 
@@ -636,10 +655,14 @@ include('sidebar.php');
                 cate: 'deleteinvoicedetail',
                 id: $('#invoicedetailid').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#delInvoiceDetailResponse").html("<font color='green'>Item remove from invoice Success</font>");
-                else
-                    $("#delInvoiceDetailResponse").html("<font color='error'>Can not remove item on invoice</font>");
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Item remove from invoice Success</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
+                    $("#responseFail").html("<font color='error'>Can not remove item on invoice</font>");
+                }
             });
         }
 
@@ -648,10 +671,14 @@ include('sidebar.php');
                 cate: 'deletepayment',
                 id: $('#paymentid').val(),
             }, 'POST', 'text', function (data) {
-                if (data == 'ok')
-                    $("#deletePaymentResponse").html("<font color='green'>Payment deleted success</font>");
-                else
-                    $("#deletePaymentResponse").html("<font color='error'>Can not delete payment</font>");
+                if (data == 'ok') {
+                    $("#responseFail").html("");
+                    $("#responseSuccess").html("<font color='green'>Payment deleted success</font>");
+                    loadInvoices();
+                } else {
+                    $("#responseSuccess").html("");
+                    $("#responseFail").html("<font color='error'>Can not delete payment</font>");
+                }
             });
         }
 

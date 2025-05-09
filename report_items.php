@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $start_date = $_POST['start_date'] . " 00:00:01";
     $end_date = $_POST['end_date'] . " 23:59:59";
 
-    $query = "SELECT * FROM items WHERE regdate BETWEEN '$start_date' AND '$end_date' ORDER BY regdate ASC";
+    $query = "SELECT * FROM items WHERE created_at BETWEEN '$start_date' AND '$end_date' ORDER BY created_at ASC";
     $stmt = $pdo->query($query);
     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sales Report</title>
+    <title>Stock Report</title>
     <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="assets/xlsx/xlsx.full.min.js"></script>
 </head>
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <hr>
     <div class="row">
         <div class="col-12">
-            <h4>Sales Report</h4>
+            <h4>Stock Report</h4>
             <div class="card">
                 <div class="card-body">
                     <!-- Report content will go here -->
@@ -68,16 +68,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($items as $item): ?>
+                        <?php
+                        $stockValue = 0;
+                        $totalQuantity = 0;
+                        foreach ($items as $k=>$item){
+                            $stockValue+= $item['quantity']*$item['selling_price'];
+                            $totalQuantity+=$item['quantity'];
+                            ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($k+1); ?></td>
                                 <td><?php echo htmlspecialchars($item['name']); ?></td>
-                                <td><?php echo htmlspecialchars($item['buying_price']); ?></td>
-                                <td><?php echo htmlspecialchars($item['selling_price']); ?></td>
+                                <td><?php echo htmlspecialchars($item['buying_price']); ?> RWF</td>
+                                <td><?php echo htmlspecialchars($item['selling_price']); ?> RWF</td>
                                 <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                                 <td><?php echo htmlspecialchars($item['created_at']); ?></td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php }; ?>
+                        <tr>
+                            <th colspan="3">Stock value</th>
+                            <td><?php echo $stockValue; ?> RWF</td>
+                            <th>Total quantity</th>
+                            <td colspan="2"><?php echo $totalQuantity; ?></td>
+                        </tr>
                         </tbody>
                     </table>
 

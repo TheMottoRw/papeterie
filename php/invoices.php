@@ -86,7 +86,7 @@ class Invoices
     {
         $query = "SELECT p.*,i.invoice_identifier,i.paid as invoice_paid,i.remain as invoice_remain,c.id AS client_id,c.name AS client_name,c.phone AS client_phone
                     FROM payments p INNER JOIN invoices i ON p.invoice_id = i.invoice_id
-                    INNER JOIN clients c ON c.id = i.invoice_clientid WHERE p.invoice_id = ?";
+                    INNER JOIN clients c ON c.id = i.invoice_clientid WHERE p.invoice_id = ? AND p.delete_status=0";
         $data = $this->db->select($query, [$datas['invoice']]);
         return json_encode($data);
     }
@@ -219,8 +219,10 @@ class Invoices
         //dedact in invoice total amount from the amount of detail
         $invoice = $this->db->selectOne("SELECT * FROM invoices WHERE invoice_id=?", [$detail['invoice_id']]);
         $new_total_amount = $invoice['total_amount'] - $detail['total_price'];
-        $new_remain_amount = $new_total_amount - $invoice['paid'];;
-        $updinvoice = $this->db->update("UPDATE invoices SET remain=?,total_amount=? WHERE invoice_id=?", [$new_remain_amount, $new_total_amount, $invoice['invoice_id']]);
+        $new_remain_amount = $new_total_amount - $invoice['paid'];
+        $new_total_profit = $invoice['total_profit'] - $detail['profit'];
+
+        $updinvoice = $this->db->update("UPDATE invoices SET remain=?,total_amount=?,total_profit=? WHERE invoice_id=?", [$new_remain_amount, $new_total_amount, $new_total_profit, $invoice['invoice_id']]);
         if ($updinvoice == 0) return 'fail';
         //delete invoice detail
         $deldetails = $this->db->update("UPDATE invoicesdetails SET status='deleted' WHERE invoicedt_id=?", [$detail['invoicedt_id']]);

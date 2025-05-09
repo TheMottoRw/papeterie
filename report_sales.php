@@ -93,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <td><?php echo htmlspecialchars($sale['client_phone']); ?></td>
                                 <td><?php echo htmlspecialchars($sale['invoice_identifier']); ?></td>
                                 <td><?php echo htmlspecialchars($sale['total_amount']); ?> RWF</td>
-                                <td><?php echo htmlspecialchars($sale['profit']); ?> RWF</td>
+                                <td><?php echo htmlspecialchars($sale['total_profit']); ?> RWF</td>
                                 <td><?php echo htmlspecialchars($sale['paid']); ?> RWF</td>
                                 <td><?php echo htmlspecialchars($sale['remain']); ?> RWF</td>
                             </tr>
