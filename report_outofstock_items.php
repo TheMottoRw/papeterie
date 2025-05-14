@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <!-- Report content will go here -->
                     <!-- Report Table -->
                     <h6 id="report-title">Out of stock Report Min. quantity <?php echo htmlspecialchars(substr($quantity,0,10)); ?>
-                        to <?php echo htmlspecialchars(substr($end_date,0,10)); ?></h6>
+                        </h6>
 
                     <table class="table" id="table">
                         <thead>
